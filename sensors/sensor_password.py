@@ -56,7 +56,7 @@ class SensorPassword(Sensor):
         print('User name: ' + user_name+ "\n\n")
  
         self._logger.debug('Dispatchng the trigger....')
-        payload = {'user_id': user_id, 'user_name': user_name, 'user_email': user_email,'password_daysleft': daysleft}
+        payload = {'user_id': user_id, 'user_name': user_name, 'user_email': user_email,'password_daysleft': int(daysleft)}
         self.sensor_service.dispatch(trigger='freeipa.password_expired_event', payload=payload)
 
         i += 1
