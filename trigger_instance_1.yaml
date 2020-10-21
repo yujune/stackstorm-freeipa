@@ -1,0 +1,8 @@
+---
+
+trigger: "freeipa.password_expired_event"
+payload:
+  user_id: "huat123"
+  user_name: "huat ah"
+  user_email: "huatah@gmail.com"
+  password_daysleft: 6
