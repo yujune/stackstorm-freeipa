@@ -47,18 +47,21 @@ class SensorPassword(Sensor):
           
           timeleft = self.get_expired_timeleft(user_password_expiration_date)                      # calculate the effective password time left start from today 
           print('Time left:    ' + str(timeleft)) 
+          daysleft = timeleft.days
+          #secondsleft = timeleft.seconds
+          print('Day(s) left: ' + str(daysleft))
              
         user_name = current_user.get('cn','no name')                # get the current user name
         user_name = user_name[0]
         print('User name: ' + user_name+ "\n\n")
-        #print(str(i) + ") ID: " + user_id + "\n Name: " + user_name + "\n Email: " + user_email + "\n Password Expiration Date: " +' user_password_expiration_date' + "\n")
+ 
+        self._logger.debug('Dispatchng the trigger....')
+        # count = self.sensor_service.get_value('hello_st2.count') or 0
+        payload = {'user_id': user_id, 'user_name': user_name, 'user_email': user_email,'password_daysleft': daysleft}
+        self.sensor_service.dispatch(trigger='freeipa.password_expired_event', payload=payload)
+        # self.sensor_service.set_value('hello_st2.count', payload['count'])
+
         i += 1
-      
-      self._logger.debug('Dispatchng the trigger....')
-      # count = self.sensor_service.get_value('hello_st2.count') or 0
-      payload = {'user_id': user_id, 'user_name': user_name, 'user_email': user_email,'password_expiration':{'expired_date':expired_date,'expired_time':expired_time}}
-      self.sensor_service.dispatch(trigger='freeipa.password_expired_event', payload=payload)
-      # self.sensor_service.set_value('hello_st2.count', payload['count'])
       
       eventlet.sleep(60)
 
