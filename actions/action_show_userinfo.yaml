@@ -1,0 +1,14 @@
+---
+name: "action_show_userinfo"
+pack: "freeipa"
+runner_type: "python-script"
+description: "This action will show the user's information"
+enabled: true
+entry_point: "action_show_userinfo.py"
+parameters:
+  user_id:
+    type: "string"
+    description: "The id of the user"
+    required: true
+    position: 0
+
