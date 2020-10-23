@@ -1,0 +1,21 @@
+---
+name: freeipa
+
+description: "Freeipa pack"
+
+keywords:
+  - freeipa
+  - ciro
+
+version: 1.0.0
+
+python_versions:
+  - "2"
+  - "3"
+
+author: TeeYuJune
+
+email: yujunetee@cirosolution.com
+
+contributors:
+  - "TeeYuJune <yujunetee@cirosolution.com>"

@@ -1,0 +1,51 @@
+---
+smtp_account:
+  description: "SMTP account"
+  type: "object"
+  required: true
+  properties:
+      server:
+        description: "The email server name"
+        type: "string"
+        secret: false
+        required: true
+
+      username:
+        description: "The email user name"
+        type: "string"
+        required: true
+
+      password:
+        description: "The email user's password"
+        type: "string"
+        secret: true
+        required: true
+
+      port:
+        description: "Port to connect"
+        type: integer
+        required: true
+        default: 587
+
+freeipa_account:
+  description: "Freeipa admin's account"
+  type: "object"
+  required: true
+  properties:
+    link_address:
+      description: "The link address of Freeipa"
+      type: "string"
+      required: true
+
+    admin_id:
+      description: "The Id to login as a admin"
+      type: "string"
+      required: true
+
+    admin_password:
+      description: "The password of the admin account"
+      type: "string"
+      secret: true
+      required: true
+
+        

@@ -1,4 +1,5 @@
 from datetime import datetime
+from python_freeipa import ClientMeta
 
 def get_expired_timeleft(self,expired_date):
   today = datetime.now()    # get the current time (datetime object)
@@ -8,3 +9,15 @@ def get_expired_timeleft(self,expired_date):
   timeleft = expired_date - today    # get the remaining password effective time
   daysleft = timeleft.days           # get the remaning days
   return daysleft
+
+def freeipa_login(self):
+  freeipa_account = self.config.get('freeipa_account', None)
+  
+  if freeipa_account is None:
+    raise ValueError('"freeipa_account" config value is required to login as admin')
+
+  client = ClientMeta(freeipa_account['link_address'],verify_ssl=False)
+  client.login(freeipa_account['admin_id'], freeipa_account['admin_password'])
+
+  return client
+
