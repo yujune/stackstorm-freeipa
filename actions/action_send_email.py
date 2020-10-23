@@ -21,8 +21,6 @@ class SendEmail(Action):
     msg['From'] = sender_email
     msg['To'] = receiver_email  
 
-    subject = "Password Expiration Warning"
-
     body = "Hi, " + receiver_name + ".\n" + "Your freeipa password is going to be expired in " + str(passw_daysleft) + " day(s)."
     #server = smtplib.SMTP('smtp.gmail.com', 587)   # connect to SMTP server (Google mail server address )
     server = smtplib.SMTP( account['server'], account['port'])
@@ -30,13 +28,13 @@ class SendEmail(Action):
     msg.attach(MIMEText(body, 'plain'))
     text = msg.as_string()
 
-    #message = 'Subject: {subject}\n\n{body}'
-
     server.starttls()    # encrypt the traffic
     server.login(sender_email, password)    # login 
     print("Login Success")
 
     server.sendmail(sender_email, receiver_email, text)
+    del msg
+
     print("The email has been sent to " + receiver_email)
     server.quit()
 
