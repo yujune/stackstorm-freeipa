@@ -22,10 +22,26 @@ class SendEmail(Action):
     msg['To'] = receiver_email  
 
     body = "Hi, " + receiver_name + ".\n" + "Your freeipa password is going to be expired in " + str(passw_daysleft) + " day(s)."
+
+    body = '<p>Hello, ' + receiver_name + '. Your freeipa password is going to be expired in ' + str(passw_daysleft) + ' day(s).<br> Please <a href="www.google.com">click here</a> to change your password. Thank you very much.</p>'
     #server = smtplib.SMTP('smtp.gmail.com', 587)   # connect to SMTP server (Google mail server address )
+
+    html = """\
+    <html>
+      <body>
+        <h1>Hi, $(receiver_name) </h1>
+        <p>Your freeipa password is going to be expired in $(passw_daysleft) day(s).<br>
+           Please <a href="www.google.com">click here</a> to change your password.<br>
+           Thank you very much!
+        </p>
+      </body>
+    </html>
+"""
+    html = html.replace("$(receiver_name)", receiver_name)
+    html = html.replace("$(passw_daysleft)",str(passw_daysleft))
     server = smtplib.SMTP( account['server'], account['port'])
 
-    msg.attach(MIMEText(body, 'plain'))
+    msg.attach(MIMEText(html, 'html'))
     text = msg.as_string()
 
     server.starttls()    # encrypt the traffic

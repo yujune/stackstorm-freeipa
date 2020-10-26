@@ -2,8 +2,8 @@ import sys
 from python_freeipa import ClientMeta
 from st2common.runners.base_action import Action
 from datetime import datetime
-from lib.sharedcode import get_expired_timeleft
-from lib.sharedcode import freeipa_login
+from sharedcode import get_expired_timeleft
+from sharedcode import freeipa_login
 
 class ShowUserInfo(Action):
   def run(self, user_id):
