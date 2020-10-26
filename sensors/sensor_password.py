@@ -2,6 +2,8 @@ import eventlet
 from datetime import datetime
 from st2reactor.sensor.base import Sensor
 from python_freeipa import ClientMeta
+from sharedcode import get_expired_timeleft
+from sharedcode import freeipa_login
 
 class SensorPassword(Sensor):
 
@@ -9,16 +11,11 @@ class SensorPassword(Sensor):
     super(SensorPassword, self).__init__(sensor_service=sensor_service, config=config)
     self._logger = self.sensor_service.get_logger(name=self.__class__.__name__)
     self._stop = False
-    self._client = ClientMeta('tst-freeipa-master.cirosolution.com',verify_ssl=False)
+    self._client = freeipa_login(self)
 
   def setup(self):
-  
-    self._client.login('admin', 'asdf1234password')
-    # user = client.user_show('ahjune')
-    # all_user = client.user_find('ahjune')
-    # print(all_user)
-    # print(user.get('result',None).get('krbpasswordexpiration',None)[0].get('__datetime__',None)
- 
+    pass
+   
   def run(self):
     
     while not self._stop:
@@ -45,9 +42,7 @@ class SensorPassword(Sensor):
         else:
           user_password_expiration_date = user_password_expiration_date.get('__datetime__')        # get the password expiration date
           
-          timeleft = self.get_expired_timeleft(user_password_expiration_date)                      # calculate the effective password time left start from today 
-          print('Time left:    ' + str(timeleft)) 
-          daysleft = timeleft.days
+          daysleft = get_expired_timeleft(self, user_password_expiration_date)                      # calculate the effective password time left start from today 
           #secondsleft = timeleft.seconds
           print('Day(s) left: ' + str(daysleft))
              
@@ -62,16 +57,6 @@ class SensorPassword(Sensor):
         i += 1
       
       eventlet.sleep(60)
-
-  def get_expired_timeleft(self,expired_date):
-      today = datetime.now()    # get the current time (datetime object)
-      today = datetime.strftime(today, '%Y%m%d%H%M%SZ')    # convert the current time to string with the specified format, parameter of strftime must be obj
-      today = datetime.strptime(today, '%Y%m%d%H%M%SZ')    # convert the current time back to datetime object in order to do substraction. Parameter of strptime must be str
-      expired_date = datetime.strptime(expired_date, '%Y%m%d%H%M%SZ')    # convert expired_date to datetime object for substraction 
-      print("Expired Date: " + str(expired_date))
-      print("Today: " + str(today))   
-      timeleft = expired_date - today    # get the remaining password effective time
-      return timeleft
       
   def cleanup(self):
       self._stop = True
