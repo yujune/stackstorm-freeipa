@@ -5,6 +5,17 @@ runner_type: "python-script"
 description: "This action will show the user's information"
 enabled: true
 entry_point: "action_show_userinfo.py"
+
+notify:
+   on-complete:
+     routes:
+     - rocketchat
+     message: '"@channel: Action succeeded."'
+   on-success:
+     routes:
+     - rocketchat
+     message: '"@channel: Woohoo!"'
+
 parameters:
   user_id:
     type: "string"

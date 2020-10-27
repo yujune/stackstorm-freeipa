@@ -1,0 +1,20 @@
+---
+name: "notify_show_userinfo"
+pack: "freeipa"
+description: "Rule firing on action_show_userinfo action completion"
+enabled: true
+
+trigger:
+  type: "core.st2.generic.notifytrigger"
+  parameters: {}
+
+criteria:
+  trigger.channel:
+    pattern: "rocketchat"
+    type: "equals"
+
+action:
+  ref: "freeipa.action_show_userinfo"
+  parameters:
+    user_id: "{{trigger.user_id}}"
+

@@ -31,20 +31,15 @@ class SensorPassword(Sensor):
         user_id = user_id[0]                                # initially is e.g. " {u "ahjune123"}, after put [0] become "ahjune"
         print('User ID: ' + user_id)
           
-        user_email = current_user.get('mail','no email')            # get the current user email
+        user_email = current_user.get('personalmail','no email')            # get the current user email
         user_email = user_email[0]
         print('User email: ' + user_email)
           
-        user_password_expiration_date = current_user.get('krbpasswordexpiration','199910102211Z')[0]    # get the current user's password expiration date and time
-         
-        if  user_password_expiration_date == '1':
-          print('No Password has been set in this account')
-        else:
-          user_password_expiration_date = user_password_expiration_date.get('__datetime__')        # get the password expiration date
+        user_password_expiration_date = current_user.get('krbpasswordexpiration',None)    # get the current user's password expiration date and time
           
-          daysleft = get_expired_timeleft(self, user_password_expiration_date)                      # calculate the effective password time left start from today 
+        daysleft = get_expired_timeleft(self, user_password_expiration_date)                      # calculate the effective password time left start from today 
           #secondsleft = timeleft.seconds
-          print('Day(s) left: ' + str(daysleft))
+        print('Day(s) left: ' + str(daysleft))
              
         user_name = current_user.get('cn','no name')                # get the current user name
         user_name = user_name[0]
@@ -56,7 +51,7 @@ class SensorPassword(Sensor):
 
         i += 1
       
-      eventlet.sleep(60)
+      eventlet.sleep(86400)
       
   def cleanup(self):
       self._stop = True
