@@ -10,11 +10,10 @@ trigger:
 
 criteria:
   trigger.channel:
-    pattern: "rocketchat"
+    pattern: "chatops"
     type: "equals"
 
 action:
-  ref: "freeipa.action_show_userinfo"
+  ref: "chatops.post_message"
   parameters:
-    user_id: "{{trigger.user_id}}"
-
+    message: "{{trigger.message}}"

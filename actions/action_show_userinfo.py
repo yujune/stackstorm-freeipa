@@ -9,7 +9,7 @@ class ShowUserInfo(Action):
   def run(self, user_id):
     
     client = freeipa_login(self)
-     
+ 
     user = client.user_find(o_uid= user_id).get('result', None)[0]
     name = user.get('cn', '-')[0]
     email = user.get('mail', '-')[0]
@@ -50,6 +50,17 @@ class ShowUserInfo(Action):
     
     else:
       account_status = 'Permanent Locked'
+    
+    output = \
+    '\n-------------------- Account Status -----------------------\n\n' \
+    'User Name                  : ' + name + '\n\n' \
+    'Account Status             : ' + account_status + '\n\n' \
+    'Failed Password Attempted  : ' + password_failed_times + '\n\n' \
+    'Last Failed Attempted      : ' + str(password_last_failed_date) + '\n\n' \
+    'Password Expired Date      : ' + str(password_expired_date) + '\n\n' \
+    'Password Valid Days        : ' + str(pwd_daysleft) + '\n\n\n' \
+    'Max failure is ' + max_password_failure + ' times. You have '+ str(chances_left) +' chances left.\n\n' \
+    '\n-------------------- Account Status -----------------------\n'
 
     print('\n-------------------- Account Status -----------------------\n')
     print('User Name                  : ' + name + '\n')
@@ -63,6 +74,6 @@ class ShowUserInfo(Action):
 
     client.logout()
     self.logger.info('Successfully log out')
-    return(True, "Successful")
+    return(True, output)
 
 

@@ -14,10 +14,21 @@ ack:
 
 result:
   format: |
- 
-    Your account's details are as follows:
 
-    {{execution.result['stdout']}}
+    {% if 'succeeded' == execution.status %} 
+    Action {{execution.status}}
+
+    Your account's details are as follows: 
+ 
+    {{execution.result['result']}}
+
+    {% elif 'failed' == execution.status %}
+
+    Action {{execution.status}}.
+
+    Errors: 
+    "{{execution.parameters['user_id']}}" user id not found.
+    {% endif %}
 
 
 
