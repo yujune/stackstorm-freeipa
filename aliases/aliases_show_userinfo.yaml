@@ -13,32 +13,26 @@ ack:
   append_url: false 
 
 result:
-  format: |
-  
-    {% if 'succeeded' == execution.status %} 
-    Action {{execution.status}}
-
-    Your account's details are as follows: 
-
-    Account Current Status     : {{execution.result['result']['status']}}
-    User Name                  : {{execution.result['result']['username']}}
-    Failed Password Attempted  : {{execution.result['result']['failed_password_attempted']}}
-    Last Failed Attempted      : {{execution.result['result']['last_failed_attempted']}}
-    Password Expired Date      : {{execution.result['result']['password_expired_date']}}
-    Password Valid Days        : {{execution.result['result']['password_valid_days']}}
-
-    Max failure is {{execution.result['result']['max_password_failure']}} times. You have {{execution.result['result']['chances_left']}} chances left.
- 
-    {% elif 'failed' == execution.status %}
-
-    Action {{execution.status}}.
-
-    "{{execution.parameters['user_id']}}" user id not found.
-
-    {% endif %}
-
-
-    
+  extra:
+    mattermost:
+      pretext: "This is the attachment pretext."
+      image_url: "http://i.imgur.com/Gb9kAYK.jpg"
+      actions: 
+        
+        - id: "message"
+          name: "Ephemeral Message"
+          integration: 
+            url: "http://10.13.18.140/api/v1/webhooks/sample?st2-api-key=MzhhNzg4YmNkZjE3OGI1ZTRhNWM0MzYyNjFjMzY2ZWNmZDRlNWI4YjZlYmJjZjM2NGFiOWE1NmQxN2NhYzBlNw"
+            context: 
+              action: "do_something_update"
+            
+        - id: "update"
+          name: "Update"
+          integration: 
+            url: "http://10.13.18.140/api/v1/webhooks/sample?st2-api-key=MzhhNzg4YmNkZjE3OGI1ZTRhNWM0MzYyNjFjMzY2ZWNmZDRlNWI4YjZlYmJjZjM2NGFiOWE1NmQxN2NhYzBlNw"
+            context: 
+              key1: "value1"
+        
 
 
 

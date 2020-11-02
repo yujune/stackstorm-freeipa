@@ -1,0 +1,17 @@
+---
+name: "rule_webhook"
+pack: "freeipa"
+description: "Rule firing on when encounting webhooks"
+enabled: true
+
+trigger:
+        type: "core.st2.webhook"
+        parameters:
+            url: "sample"
+
+
+
+action:
+    ref: "freeipa.action_update_interactive"
+    parameters:
+      webhook_data: "{{trigger.body}}"
