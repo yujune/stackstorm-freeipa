@@ -56,8 +56,6 @@ class ShowUserInfo(Action):
             chances_left = int(max_password_failure) - \
                 int(password_failed_times)
 
-            accoount_status = 'Unlock'
-
             if password_failed_times < max_password_failure:
 
                 account_status = 'Active'
@@ -82,4 +80,4 @@ class ShowUserInfo(Action):
             return(True, output)
 
         except:
-            return(False, "User ID " + "\'" + user_id + "\'" + " not found.")
+            return(False, "User id " + "\'" + user_id + "\'" + " not found.")

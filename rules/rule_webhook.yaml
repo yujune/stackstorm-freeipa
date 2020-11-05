@@ -9,9 +9,14 @@ trigger:
         parameters:
             url: "sample"
 
-
+criteria:
+  trigger.body.context.selected_option:
+    type: "equals"
+    pattern: "show_account_status"
+    
 
 action:
-    ref: "freeipa.action_update_interactive"
+    ref: "freeipa.orquesta_show_userinfo"
     parameters:
-      webhook_data: "{{trigger.body}}"
+      username: "{{trigger.body.user_name}}"
+      channel: "{{trigger.body.channel_id}}"

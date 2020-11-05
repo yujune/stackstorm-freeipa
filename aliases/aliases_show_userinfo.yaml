@@ -13,26 +13,29 @@ ack:
   append_url: false 
 
 result:
+  format: "Select your action."
   extra:
     mattermost:
       pretext: "This is the attachment pretext."
-      image_url: "http://i.imgur.com/Gb9kAYK.jpg"
       actions: 
-        
-        - id: "message"
-          name: "Ephemeral Message"
-          integration: 
-            url: "http://10.13.18.140/api/v1/webhooks/sample?st2-api-key=MzhhNzg4YmNkZjE3OGI1ZTRhNWM0MzYyNjFjMzY2ZWNmZDRlNWI4YjZlYmJjZjM2NGFiOWE1NmQxN2NhYzBlNw"
-            context: 
-              action: "do_something_update"
-            
         - id: "update"
-          name: "Update"
+          name: "Select an option..."
           integration: 
             url: "http://10.13.18.140/api/v1/webhooks/sample?st2-api-key=MzhhNzg4YmNkZjE3OGI1ZTRhNWM0MzYyNjFjMzY2ZWNmZDRlNWI4YjZlYmJjZjM2NGFiOWE1NmQxN2NhYzBlNw"
             context: 
               key1: "value1"
+            
+          type: "select"
+          options:   
+            - text: "Option1"
+              value: "opt1"
+
+            - text: "Option2"
+              value: "opt2"
+
         
+
+                
 
 
 

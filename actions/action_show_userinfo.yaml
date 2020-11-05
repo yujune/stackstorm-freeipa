@@ -9,7 +9,7 @@ entry_point: "action_show_userinfo.py"
 parameters:
   user_id:
     type: "string"
-    description: "The id of the user"
+    description: "The user id of the user"
     required: true
     position: 0
 
