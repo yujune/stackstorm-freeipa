@@ -2,39 +2,40 @@
 name: "aliases_show_userinfo"
 pack: "freeipa"
 action_ref: "freeipa.action_show_userinfo"
-description: "Show the account status of a user"
+description: "Show your FreeIPA's account status."
 formats:
   - display: "show {{user_id}}"
     representation:
       - "show {{user_id}}"
 
 ack:
-  format: "Okay, wait a second. Searching account status of ' {{execution.parameters['user_id']}} '......"
+  format: "Okay, I'll help you to search for ' {{execution.parameters['user_id']}} ' FreeIPA account status. :smile:"
   append_url: false 
 
 result:
-  format: "Select your action."
   extra:
-    mattermost:
-      pretext: "This is the attachment pretext."
-      actions: 
-        - id: "update"
-          name: "Select an option..."
-          integration: 
-            url: "http://10.13.18.140/api/v1/webhooks/sample?st2-api-key=MzhhNzg4YmNkZjE3OGI1ZTRhNWM0MzYyNjFjMzY2ZWNmZDRlNWI4YjZlYmJjZjM2NGFiOWE1NmQxN2NhYzBlNw"
-            context: 
-              key1: "value1"
-            
-          type: "select"
-          options:   
-            - text: "Option1"
-              value: "opt1"
+    rocketchat:
+      pretext: |
+        {% if 'succeeded' == execution.status %} 
+        Here you go! This is your FreeIPA account details.
+        {% elif 'failed' == execution.status %}
+        Oh No! Something went wrong.
+        {% endif %}
 
-            - text: "Option2"
-              value: "opt2"
+      text: |-
+        {% if 'succeeded' == execution.status %} 
+        ```Account Current Status     : {{execution.result['result']['status']}}
+        User Name                  : {{execution.result['result']['username']}}
+        Failed Password Attempted  : {{execution.result['result']['failed_password_attempted']}}
+        Last Failed Attempted      : {{execution.result['result']['last_failed_attempted']}}
+        Password Expired Date      : {{execution.result['result']['password_expired_date']}}
+        Password Valid Days        : {{execution.result['result']['password_valid_days']}}```
 
-        
-
+        Max failure is {{execution.result['result']['max_password_failure']}} times. You have {{execution.result['result']['chances_left']}} chances left.
+        {% elif 'failed' == execution.status %}
+        "{{execution.parameters['user_id']}}" user id cannot be not found in FreeIPA. :cry:
+        {% endif %}
+      color: "#FF8C00"
                 
 
 
