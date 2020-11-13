@@ -15,7 +15,6 @@ class ShowUserInfo(Action):
 
             user = client.user_find(o_uid=user_id).get('result', None)[0]
             name = user.get('cn', '-')[0]
-            email = user.get('mail', '-')[0]
             password_expired_date = user.get('krbpasswordexpiration', None)
 
             pwd_daysleft = get_expired_timeleft(self, password_expired_date)

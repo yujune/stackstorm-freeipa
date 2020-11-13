@@ -23,12 +23,6 @@ class SendEmail(Action):
         msg['From'] = sender_email
         msg['To'] = receiver_email
 
-        body = "Hi, " + receiver_name + ".\n" + \
-            "Your freeipa password is going to be expired in " + \
-            str(passw_daysleft) + " day(s)."
-
-        body = '<p>Hello, ' + receiver_name + '. Your freeipa password is going to be expired in ' + \
-            str(passw_daysleft) + ' day(s).<br> Please <a href="www.google.com">click here</a> to change your password. Thank you very much.</p>'
         # server = smtplib.SMTP('smtp.gmail.com', 587)   # connect to SMTP server (Google mail server address )
 
         html = """\
