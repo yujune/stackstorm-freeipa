@@ -11,6 +11,7 @@ class ShowUserInfo(Action):
     def run(self, user_id):
 
         try:
+            # login to freeipa
             client = freeipa_login(self)
 
             user = client.user_find(o_uid=user_id).get('result', None)[0]
